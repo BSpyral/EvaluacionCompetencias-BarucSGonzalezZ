@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+	<title>Eventos del Comité</title>
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+	<script src="Controlador.js"></script> 
+</head>
+<body>
+	<h1 align="center">Eventos</h1>
+	<div align="center">
+		<img src="https://www.uaeh.edu.mx/imagen/imagenes/2020/recursos/garza.png" alt="UAEH" width="10%"  height="10%">
+	</div>
+	<table id="table" align="center">
+		<tr> 
+			<!-- Ordenar por fechaInicio -->
+			<td>NombreEvento</td>
+			<td>FechaInicio</td>
+			<td>FechaFinal</td>
+			<td><button onclick="modificarEvento()" id="modificar">Modificar</button> </td>
+			<td><button onclick="eliminarEvento()" id="eliminar">Eliminar</button> </td>
+		</tr>
+		<tr>
+			<td align="center" colspan="4"><button onclick="anadirEvento()" id=anadir>AñadirEvento</button> </td>
+		</tr>
+	</table>
+
+	<div id=formUbicacion align="center">
+		<form method="POST" id="formulario"> 
+			<label for="l_evento">Nombre del Evento:</label><br> 
+			<input type="text" name="NombreEvento" required="true"> <br> 
+			<label for="l_fechaInicio">Fecha Inicio:</label><br> 
+			<input type="text" name="FechaInicio" required="true"> <br> 
+			<label for="l_fechaFinal">Fecha Termino:</label><br> 
+			<input type="text" name="FechaFinal" required="true"> <br> 
+			<label for="l_observaciones">Observaciones:</label><br> 
+			<input type="text" name="Observaciones"> <br> 
+			<button onclick="enviarFormulario()">Actualizar</button> 
+		</form>
+	</div>
+</body>
+</html>
