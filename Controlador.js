@@ -29,17 +29,39 @@ function enviarFormulario(){
 	if (completado){
 		formularioJSON[4]=tipoOperacion;
 
-		var infoJSON =JSON.stringify(formularioJSON);
-		console.log(infoJSON);
-		console.log(formularioJSON);
-		const xhttp = new XMLHttpRequest();
+		const infoJSON = {
+			nombre:formularioJSON[0],
+			fechaInicio:formularioJSON[1],
+			fechaFinal:formularioJSON[2],
+			observaciones:formularioJSON[3],
+			operacion:formularioJSON[4],
+		};
 
-		xhttp.open("POST", "Modelo.php");
-		xhttp.send();	//Enviar a PHP
-		
-		alert("La informacion ha sido registrada");
-		$("#formulario").hide();
-	}
+		console.log(JSON.stringify(infoJSON));
+
+		 // Configurar la solicitud
+	    const solicitud = {
+	        method: 'POST',
+	        headers: {
+	            'Content-Type': 'application/json',
+	        },
+	        body: JSON.stringify(infoJSON),
+	    };
+
+	    // Realizar la solicitud
+	    fetch('Modelo.php', solicitud)
+	        .then(response => response.json())
+	        .then(data => {
+	        	console.log(data);
+	        })
+	        .catch(error => {
+	            // Manejar errores de la solicitud
+	            console.error('Error:', error);
+	        });
+			
+			alert("La informacion ha sido registrada");
+			$("#formulario").hide();
+		}
 	
 }
 
