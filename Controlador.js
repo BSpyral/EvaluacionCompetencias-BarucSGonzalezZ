@@ -1,10 +1,12 @@
 $(document).ready(function(){
 
-  $("#formulario").hide();
+	$("#formulario").hide();
+	actualizarTabla();
 
 }); 
 
 var tipoOperacion;
+var idEnviar;
 
 function anadirEvento(){
 	$("#formulario").show();
@@ -29,17 +31,40 @@ function enviarFormulario(){
 	if (completado){
 		formularioJSON[4]=tipoOperacion;
 
-		var infoJSON =JSON.stringify(formularioJSON);
-		console.log(infoJSON);
-		console.log(formularioJSON);
-		const xhttp = new XMLHttpRequest();
+		const infoJSON = {
+			id:idEnviar,
+			nombre:formularioJSON[0],
+			fechaInicio:formularioJSON[1],
+			fechaFinal:formularioJSON[2],
+			observaciones:formularioJSON[3],
+			operacion:formularioJSON[4],
+		};
 
-		xhttp.open("POST", "Modelo.php");
-		xhttp.send();	//Enviar a PHP
-		
-		alert("La informacion ha sido registrada");
-		$("#formulario").hide();
-	}
+		console.log(JSON.stringify(infoJSON));
+
+		 // Configurar la solicitud
+	    const solicitud = {
+	        method: 'POST',
+	        headers: {
+	            'Content-Type': 'application/json',
+	        },
+	        body: JSON.stringify(infoJSON),
+	    };
+
+	    // Realizar la solicitud
+	    fetch('Modelo.php', solicitud)
+	        .then(response => response.json())
+	        .then(data => {
+	        	console.log(data);
+	        })
+	        .catch(error => {
+	            // Manejar errores de la solicitud
+	            console.error('Error:', error);
+	        });
+			
+			alert("La informacion ha sido registrada");
+			$("#formulario").hide();
+		}
 	
 }
 
@@ -54,6 +79,7 @@ function eliminarEvento(){
 	var decision=confirm("¿Desea eliminarlo?");
 
 	if (decision==true){
+		//idEnviar=;
 		//Eliminar desde PHP
 		alert("La informacion ha sido eliminada")
 	}
@@ -63,6 +89,8 @@ function eliminarEvento(){
 function actualizarTabla(){
 	var table=document.getElementById("table");
 	//Crear dinamicamente la tabla
+
+
 
 	//JSON.parse() //Para recoger en JSON
 
