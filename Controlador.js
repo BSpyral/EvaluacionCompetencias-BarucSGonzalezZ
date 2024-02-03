@@ -1,10 +1,12 @@
 $(document).ready(function(){
 
-  $("#formulario").hide();
+	$("#formulario").hide();
+	actualizarTabla();
 
 }); 
 
 var tipoOperacion;
+var idEnviar;
 
 function anadirEvento(){
 	$("#formulario").show();
@@ -30,6 +32,7 @@ function enviarFormulario(){
 		formularioJSON[4]=tipoOperacion;
 
 		const infoJSON = {
+			id:idEnviar,
 			nombre:formularioJSON[0],
 			fechaInicio:formularioJSON[1],
 			fechaFinal:formularioJSON[2],
@@ -76,6 +79,7 @@ function eliminarEvento(){
 	var decision=confirm("¿Desea eliminarlo?");
 
 	if (decision==true){
+		//idEnviar=;
 		//Eliminar desde PHP
 		alert("La informacion ha sido eliminada")
 	}
@@ -85,6 +89,8 @@ function eliminarEvento(){
 function actualizarTabla(){
 	var table=document.getElementById("table");
 	//Crear dinamicamente la tabla
+
+
 
 	//JSON.parse() //Para recoger en JSON
 
