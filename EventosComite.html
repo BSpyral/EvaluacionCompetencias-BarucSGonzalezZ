@@ -11,18 +11,20 @@
 	<div align="center">
 		<img src="https://www.uaeh.edu.mx/imagen/imagenes/2020/recursos/garza.png" alt="UAEH" width="10%"  height="10%">
 	</div>
-	<table id="table" align="center">
-		<tr> 
-			<!-- Ordenar por fechaInicio -->
-			<td>NombreEvento</td>
-			<td>FechaInicio</td>
-			<td>FechaFinal</td>
-			<td><button onclick="modificarEvento()" id="modificar">Modificar</button> </td>
-			<td><button onclick="eliminarEvento()" id="eliminar">Eliminar</button> </td>
-		</tr>
-		<tr>
-			<td align="center" colspan="4"><button onclick="anadirEvento()" id=anadir>AñadirEvento</button> </td>
-		</tr>
+	<table id="table" align="center" width="75%">
+		<thead>
+			<tr> 
+				<td>Nombre del Evento</td>
+				<td>Fecha Inicio</td>
+				<td>Fecha Final</td>
+				<td>Observaciones</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td align="center" colspan="6" id="fila_botonAnadir"><button onclick="anadirEvento()" id=anadir>AñadirEvento</button> </td>
+			</tr>
+		</tbody>
 	</table>
 
 	<div id=formUbicacion align="center">
