@@ -21,45 +21,54 @@ $tabla=$database.".Eventos";
 $sql = "CREATE TABLE IF NOT EXISTS ".$tabla." (
 idEvento int,
 nombre varchar(255) NOT NULL,
-fechaInicio datetime NOT NULL,
-fechaTermino datetime NOT NULL,
+fechaInicio date NOT NULL,
+fechaTermino date NOT NULL,
 observaciones varchar(255) NOT NULL,
 CONSTRAINT PK_Evento PRIMARY KEY NONCLUSTERED (idEvento)
 )";
 	if ($conexion->query($sql) === TRUE) {
-	  	echo "Tabla Eventos creada exitosamente";
+	  	echo "Tabla Eventos creada exitosamente<br>";
 	} else {
 	 	die("Error: No se pudo crear la tabla Eventos" . $conexion->error);
 	}
 
-//Consulta para saber ID actual en la tabla
-	//EDITAR: no puedo hacer uso del Count para definir el id, deberia usar el ultimo id o el mas grande como referencia
-$sql="SELECT COUNT(*) FROM ".$tabla;
+//Consulta para saber ID mas alto en la tabla
+$sql="SELECT MAX(idEvento) FROM ".$tabla;
 $resultado=$conexion->query($sql);	
-$id_actual=$resultado->fetch_row();
-$_SESSION["ID_Actual"]=$id_actual[0];
-$_SESSION["ID_Actual"]++;
+$resultado=$resultado->fetch_row();
+$id_actual=$resultado[0];
 
-$resultado->close();
+if ($id_actual!=null){
+	$id_actual++;
+}
+else{
+	echo "Primer dato en la BD";
+	$id_actual=1;
+}
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
-//Recibimiento de los datos en JSON   	//PROBAR
-	//$json = file_get_contents('php://input');
-	//$data = json_decode($json);
-	if ($_POST["operacion"]=="anadir"){
+//Recibimiento de los datos en JSON   	
+$json = file_get_contents('php://input');
+$data = json_decode($json,"true");
+	
+if ($data){
+	if ($data["operacion"]=="anadir"){
 		$sql = "INSERT INTO ".$tabla." (idEvento, nombre, fechaInicio,fechaTermino,observaciones)
-		VALUES (".$_SESSION["ID_Actual"].",".$_POST["nombre"].",".$_POST["fechaInicio"].",".$_POST["fechaFinal"].",".$_POST["observaciones"].")";
-
+		VALUES (".$id_actual.",'".$data["nombre"]."','".$data["fechaInicio"]."','".$data["fechaFinal"]."','".$data["observaciones"]."')";			
 		if ($conexion->query($sql) === TRUE) {
 		  echo "Añadido correctamente";
 		} else {
 		  echo "Error: " . $sql . "<br>" . $conexion->error;
 		}
-		$_SESSION["ID_Actual"]++;
+
 	}
-	else if ($_POST["operacion"]=="modificar"){
-		$sql = "UPDATE ".$tabla." SET ".data["id"].",".$_POST["nombre"].",".$_POST["fechaInicio"].",".$_POST["fechaFinal"].",".$_POST["observaciones"]." WHERE idEvento=".data["id"];
+	else if ($data["operacion"]=="modificar"){
+		$sql = "UPDATE ".$tabla.
+		" SET idEvento=".$data["id"].", nombre='".$data["nombre"]."', fechaInicio='".$data["fechaInicio"]."', fechaTermino='".$data["fechaFinal"]."', observaciones='".$data["observaciones"].
+		"' WHERE idEvento=".$data["id"];
 		$result = $conexion->query($sql);
 		if ($result ===TRUE){
 			echo "Modificado correctamente";
@@ -67,8 +76,8 @@ $resultado->close();
 		  echo "Error al modificar: " . $sql . "<br>" . $conexion->error;
 		}
 	}
-	else if ($_POST["operacion"]=="eliminar"){
-		$sql = "DELETE FROM ".$tabla." WHERE idEvento=".data["id"];
+	else if ($data["operacion"]=="eliminar"){
+		$sql = "DELETE FROM ".$tabla." WHERE idEvento=".$data["id"];
 
 		if ($conexion->query($sql) === TRUE) {
 		  echo "Evento eliminado exitosamente";
@@ -76,10 +85,9 @@ $resultado->close();
 		  echo "Error borrando datos: " . $conexion->error;
 		}
 	}
+}
 
 $conexion->close(); 
-
-
 ?>
 
 

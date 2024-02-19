@@ -22,7 +22,9 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td align="center" colspan="6" id="fila_botonAnadir"><button onclick="anadirEvento()" id=anadir>AñadirEvento</button> </td>
+				<td align="center" colspan="6" id="fila_botonAnadir">
+					<button onclick="anadirEvento()" id=anadir>AñadirEvento</button> 
+				</td>
 			</tr>
 		</tbody>
 	</table>
@@ -32,12 +34,12 @@
 			<label for="l_evento">Nombre del Evento:</label><br> 
 			<input type="text" name="NombreEvento" required="true"> <br> 
 			<label for="l_fechaInicio">Fecha Inicio:</label><br> 
-			<input type="text" name="FechaInicio" required="true"> <br> 
+			<input id="fe_inicio" type="text" name="FechaInicio" placeholder="2024-01-01" required="true"> <br> 
 			<label for="l_fechaFinal">Fecha Termino:</label><br> 
-			<input type="text" name="FechaFinal" required="true"> <br> 
+			<input type="text" name="FechaFinal" placeholder="2026-01-01" required="true"> <br> 
 			<label for="l_observaciones">Observaciones:</label><br> 
 			<input type="text" name="Observaciones"> <br> 
-			<button onclick="enviarFormulario()">Actualizar</button> 
+			<button id="botonEnviar" onclick="enviarFormulario()">Actualizar</button> 
 		</form>
 	</div>
 </body>
